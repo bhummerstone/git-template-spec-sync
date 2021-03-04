@@ -6,6 +6,7 @@ env:
   AZURE_RESOURCE_GROUP: template-specs-uks
   AZURE_TEMPLATE_NAME: deploy-storage
   AZURE_LOCATION: uksouth
+  AZURE_TEMPLATE_VERSION: 1.0.1
 
 jobs:
   build-and-deploy:
@@ -20,15 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Incremember Major Semver
-        id: increment-semver-major
-        uses: Benbentwo/increment-semver@master
-        with:
-          version-level: '-M'
-
       - name: Update Template Spec
         uses: azure/cli@v1
         with:
           azcliversion: latest
           inlineScript: |
-            az ts create --name ${{ env.AZURE_TEMPLATE_NAME }} --version ${{ steps.increment-semver-major.outputs.version }} --location ${{ env.AZURE_LOCATION }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --template-file $GITHUB_WORKSPACE/${{ env.AZURE_TEMPLATE_NAME }}.json        
+            az ts create --name ${{ env.AZURE_TEMPLATE_NAME }} --version ${{ env.AZURE_TEMPLATE_VERSION }} --location ${{ env.AZURE_LOCATION }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --template-file $GITHUB_WORKSPACE/${{ env.AZURE_TEMPLATE_NAME }}.json        

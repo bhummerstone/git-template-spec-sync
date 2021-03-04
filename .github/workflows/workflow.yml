@@ -27,7 +27,7 @@ jobs:
           version-level: '-M'
 
       - name: Update Template Spec
-        uses: azure/cli@v1.0.4
+        uses: azure/cli@v1
         with:
           azcliversion: latest
           inlineScript: |
